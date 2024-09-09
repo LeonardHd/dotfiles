@@ -1,0 +1,6 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+git clone https://github.com/ohmybash/oh-my-bash.git ~/.oh-my-bash
+
+{{- end }}

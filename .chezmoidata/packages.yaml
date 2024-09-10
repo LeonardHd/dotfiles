@@ -1,0 +1,6 @@
+packages:
+  linux:
+    apt:
+    - 'vim'
+    - 'git'
+    - 'less'

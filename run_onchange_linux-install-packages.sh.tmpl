@@ -1,6 +1,25 @@
 {{ if eq .chezmoi.os "linux" -}}
 #!/bin/bash
 
-git clone https://github.com/ohmybash/oh-my-bash.git ~/.oh-my-bash
+# check if the package manager is installed
+if ! command -v apt-get &> /dev/null; then
+    echo "apt-get could not be found"
+    exit 1
+else
+    # install packages
+    {{ range .packages.linux.apt -}}
+    sudo apt-get install -y {{ . | quote }}
+    {{ end -}}
+fi
+
+# git-based installs
+
+# install oh-my-bash
+
+if [ ! -d ~/.oh-my-bash ]; then
+    git clone https://github.com/ohmybash/oh-my-bash.git ~/.oh-my-bash
+else
+    echo "oh-my-bash already installed, skipping"
+fi
 
 {{- end }}

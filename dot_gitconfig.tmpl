@@ -7,3 +7,11 @@
 	l = log --oneline
 	df = diff --staged
 	d = diff
+
+{{ if .gitUseGCM }}
+[credential]
+	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
+{{ end }}
+
+[credential "https://dev.azure.com"]
+        useHttpPath = true

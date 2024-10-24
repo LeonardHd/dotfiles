@@ -19,8 +19,18 @@
 {{-   $email = promptString "email" $email -}}
 {{- end -}}
 
+{{- /* Initializes the useGCM variable with a default value */ -}}
+{{- $useGCM := false -}}
+{{- /* If useGCM was previously set, reuses it */ -}}
+{{- if hasKey . "useGCM" -}}
+{{-   $useGCM = .useGCM -}}
+{{- /* Otherwise, if running interactively, prompts for useGCM */ -}}
+{{- else if $interactive -}}
+{{-   $useGCM = promptBool "useGCM" $useGCM -}}
+{{- end -}}
+
 {{- if $interactive -}}
-{{-   writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n" -}}
+{{-   writeToStdout "💡 Tip: you can re-enter your name, email, and useGCM with `chezmoi init --data=false`.\n" -}}
 {{- end -}}
 
 sourceDir: {{ .chezmoi.sourceDir | quote }}
@@ -28,3 +38,4 @@ sourceDir: {{ .chezmoi.sourceDir | quote }}
 data:
   name: {{ $name | quote }}
   email: {{ $email | quote }}
+  gitUseGCM: {{ $gitUseGCM }}

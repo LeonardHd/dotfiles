@@ -26,4 +26,4 @@ WORKDIR /home/$USERNAME/chezmoi
 
 RUN ./install.sh
 
-CMD chezmoi verify
+CMD ["bash", "-c", "chezmoi verify"]

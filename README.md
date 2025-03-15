@@ -1,22 +1,30 @@
 # dotfiles
 
+This repository contains personal dotfiles and configuration files for various applications and tools and uses [chezmoi](https://www.chezmoi.io/).
+
+## Configure for new environments
+
 Install chezmoi via script:
 ```bash
 cd ~
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --data=false LeonardHd
 ```
 
-For dev container setup, run the following command:
-```bash
-chezmoi init --data=false --apply=true
-```
+## Codespaces
 
-## Development
+GitHub Codespaces uses the `install.sh` script to set up the environment.
+So dotfiles are automatically installed when creating a new codespace (even in
+this repository).
+
+To apply local changes to the codespace, run the following command in the terminal
+(assuming PWD is root of the dotfiles)
 
 ```bash
 chezmoi init --apply --data=false --source=.
 ```
 
-## Codespaces
+### Additional information on Codespaces
 
-> To see logs in codespaces use `View Creation Log` command or `/workspaces/.codespaces/.persistedshare/creation.log`
+- The `install.sh` script is run in the codespace environment.  
+  See <https://docs.github.com/en/codespaces/setting-your-user-preferences/personalizing-github-codespaces-for-your-account#dotfiles> for more information.
+- To see creation logs in the codespace, use the `View Creation Log` command or check the file `/workspaces/.codespaces/.persistedshare/creation.log`.

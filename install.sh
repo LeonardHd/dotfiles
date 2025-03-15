@@ -1,11 +1,13 @@
 #!/bin/sh
 
+############################################################
+# This script installs the dotfiles and is used
+# by codespaces to set up the dev container.
+############################################################
+
 # -e: exit on error
 # -u: exit on unset variables
 set -eu
-
-# debug log
-export
 
 
 if ! chezmoi="$(command -v chezmoi)"; then
@@ -26,6 +28,13 @@ fi
 
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
+
+# If in the dofiles repo and in Codespaces
+# use the /workespaces/dotfiles directory
+# assumes CODESPACES is set and RepositoryName==dotfiles
+if [ -d /workspaces/dotfiles ] && [ "${CODESPACES:-}" = "true" ]; then
+  script_dir="/workspaces/dotfiles"
+fi
 
 set -- init --apply --data=false --source="${script_dir}"
 

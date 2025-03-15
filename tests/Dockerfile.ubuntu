@@ -1,5 +1,5 @@
 FROM ubuntu:22.04
-
+SHELL ["/bin/bash", "-c"]
 # Change to non-root user
 ARG USERNAME=testuser
 ARG USER_UID=1000

@@ -6,6 +6,8 @@ if ! command -v apt-get &> /dev/null; then
     echo "apt-get could not be found"
     exit 1
 else
+    # update the package list
+    sudo apt-get update
     # install packages
     {{ range .packages.linux.apt -}}
     sudo apt-get install -y {{ . | quote }}

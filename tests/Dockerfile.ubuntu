@@ -21,12 +21,9 @@ RUN usermod -aG sudo $USERNAME \
 
 USER $USERNAME
 
-# Add the chezmoi config to the container
-COPY . /home/$USERNAME/.config/chezmoi
-# Set the working directory
-WORKDIR /home/$USERNAME/.config/chezmoi
+COPY . /home/$USERNAME/chezmoi
+WORKDIR /home/$USERNAME/chezmoi
 
-# Run chezmoi (need to be run with sudo to install packages)
-# ENTRYPOINT sudo ./tests/run.sh
+RUN ./install.sh
 
-# CMD chezmoi verify
+CMD chezmoi verify

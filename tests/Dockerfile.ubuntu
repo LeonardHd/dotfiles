@@ -1,23 +1,22 @@
 FROM ubuntu:22.04
-SHELL ["/bin/bash", "-c"]
 # Change to non-root user
 ARG USERNAME=testuser
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+&& useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
 
 # Install dependencies (curl, git, sudo)
 RUN apt-get update && apt-get install -y \
-    curl \
-    git \
-    sudo \
-    && rm -rf /var/lib/apt/lists/*
+curl \
+git \
+sudo \
+&& rm -rf /var/lib/apt/lists/*
 
 # Add the user to sudo group and configure passwordless sudo
 # Note: This is not secure, but it's convenient for testing in a container.
 RUN usermod -aG sudo $USERNAME \
-    && echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+&& echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 USER $USERNAME
 
@@ -26,4 +25,6 @@ WORKDIR /home/$USERNAME/chezmoi
 
 RUN ./install.sh
 
-CMD ["bash", "-c", "chezmoi verify"]
+# Run chezmoi (we use -l to run in a login shell)
+SHELL ["/bin/bash", "-c", "-l"]
+CMD chezmoi managed

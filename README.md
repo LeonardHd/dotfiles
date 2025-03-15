@@ -10,3 +10,13 @@ For dev container setup, run the following command:
 ```bash
 chezmoi init --data=false --apply=true
 ```
+
+## Development
+
+```bash
+chezmoi init --apply --data=false --source=.
+```
+
+## Codespaces
+
+> To see logs in codespaces use `View Creation Log` command or `/workspaces/.codespaces/.persistedshare/creation.log`

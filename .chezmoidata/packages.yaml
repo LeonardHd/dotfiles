@@ -2,6 +2,7 @@ packages:
   linux:
     apt:
     - 'vim'
+    - 'neovim'
     - 'git'
     - 'less'
     webi:

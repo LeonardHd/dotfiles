@@ -12,6 +12,24 @@ else
     {{ end -}}
 fi
 
+# webi based installs (requires curl and a sh)
+if ! command -v curl &> /dev/null; then
+    echo "curl could not be found"
+    exit 1
+fi
+if ! command -v sh &> /dev/null; then
+    echo "sh could not be found"
+    exit 1
+fi
+# install webi packages
+{{ range .packages.linux.webi -}}
+if ! command -v {{ . | quote }} &> /dev/null; then
+    curl -sS https://webi.sh/{{ . | quote }} | sh
+else
+    echo "{{ . | quote }} already installed, skipping"
+fi
+{{ end -}}
+
 # git-based installs
 
 # install oh-my-bash

@@ -2,3 +2,6 @@
 install.sh
 LICENSE
 README.md
+tests
+.vscode/
+

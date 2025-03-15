@@ -4,5 +4,6 @@ packages:
     - 'vim'
     - 'git'
     - 'less'
-    - 'gh'
+    webi:
+    - gh
 

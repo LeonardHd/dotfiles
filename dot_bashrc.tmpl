@@ -65,3 +65,12 @@ source "$OSH"/oh-my-bash.sh
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+
+############################################
+# Custom functions
+############################################
+
+gscp() {
+    git stash && git checkout "$1" && git stash pop
+}
+

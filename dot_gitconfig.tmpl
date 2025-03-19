@@ -1,7 +1,7 @@
 [user]
 	# only set git name if NOT in a devcontainer
 	{{ if ne .remoteContainer "devcontainer" }}
-	name = {{ .gitName | quote }}
+	name = {{ .name | quote }}
 	{{ end }}
 	email = {{ .email | quote }}
 [alias]

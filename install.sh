@@ -15,6 +15,17 @@ CONFIG_FILE="${HOME}/.dotfiles_config"
 name=""
 email=""
 
+# export variables for debugging
+export
+
+# output .dotfiles_config if it exists
+if [ -f "$CONFIG_FILE" ]; then
+  echo "Config file: $CONFIG_FILE"
+  echo "Contents:"
+  cat "$CONFIG_FILE"
+  echo
+fi
+
 # Parse arguments
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -42,6 +53,7 @@ fi
 # Default fallback
 name="${name:-"Leonard Herold"}"
 email="${email:-"92177433+LeonardHd@users.noreply.github.com"}"
+
 
 
 if ! chezmoi="$(command -v chezmoi)"; then

@@ -1,6 +1,8 @@
 [user]
 	name = {{ .name | quote }}
-	email = {{ .email | quote }}
+	{{ if ne .email "" }}
+   		email = {{ .email | quote }}
+	{{ end }}
 [alias]
 	f = fetch
 	s = status --short

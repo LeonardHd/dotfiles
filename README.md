@@ -23,6 +23,20 @@ To apply local changes to the codespace, run the following command in the termin
 chezmoi init --apply --data=false --source=.
 ```
 
+## Dev container VSCode Settings
+
+VSCode allows customization of the development container via dotfiles.
+
+Use the following user settings to enable dotfiles in the dev container:
+
+```json
+{
+    "dotfiles.repository": "LeonardHd/dotfiles",
+    "dotfiles.targetPath": "~/dotfiles",
+    "dotfiles.installCommand": "install.sh",
+}
+```
+
 ### Additional information on Codespaces
 
 - The `install.sh` script is run in the codespace environment.  

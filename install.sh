@@ -9,40 +9,6 @@
 # -u: exit on unset variables
 set -eu
 
-CONFIG_FILE="${HOME}/.dotfiles_config"
-
-# Default values
-name=""
-email=""
-
-# export variables for debugging
-export
-
-# output .dotfiles_config if it exists
-if [ -f "$CONFIG_FILE" ]; then
-  echo "Config file: $CONFIG_FILE"
-  echo "Contents:"
-  cat "$CONFIG_FILE"
-  echo
-fi
-
-# Parse arguments
-while [ "$#" -gt 0 ]; do
-  case "$1" in
-    --name)
-      name="$2"
-      shift 2
-      ;;
-    --email)
-      email="$2"
-      shift 2
-      ;;
-    *)
-      echo "Unknown argument: $1" >&2
-      exit 1
-      ;;
-  esac
-done
 
 # Read from config file if arguments were not provided
 if [ -f "$CONFIG_FILE" ]; then
@@ -72,17 +38,20 @@ if ! chezmoi="$(command -v chezmoi)"; then
   unset chezmoi_install_script bin_dir
 fi
 
-# POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
-script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
-
-# If in the dofiles repo and in Codespaces
-# use the /workespaces/dotfiles directory
-# assumes CODESPACES is set and RepositoryName==dotfiles
+# Check whether we run in a codespace
+# or build a devcontainer (via vscode)
 if [ -d /workspaces/dotfiles ] && [ "${CODESPACES:-}" = "true" ]; then
+  # If in the dofiles repo and in Codespaces
+  # use the /workespaces/dotfiles directory
+  # assumes CODESPACES is set and RepositoryName==dotfiles
   script_dir="/workspaces/dotfiles"
+  set -- init --apply --data "remoteContainer=codespaces" --source="${script_dir}"
+else
+  # If not in Codespaces, use the script's directory
+  # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
+  script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
+  set -- init --apply --data "remoteContainer=devcontainer" --source="${script_dir}"
 fi
-
-set -- init --apply --data "name=${name}" --data "email=${email}" --source="${script_dir}"
 
 echo "Running 'chezmoi $*'" >&2
 # exec: replace current process with chezmoi

@@ -77,3 +77,19 @@ gscp() {
     git stash && git checkout "$1" && git stash pop
 }
 
+############################################
+# Git configuration for Development Containers
+############################################
+
+{{ if eq .remoteContainer "devcontainer" }}
+# If using a devcontainer we need to prompt for git name and email
+# and set them in the git config
+if [ -z "$(git config --global user.name)" ]; then
+    read -p "Enter your git name: " name
+    git config --global user.name "$name"
+fi
+if [ -z "$(git config --global user.email)" ]; then
+    read -p "Enter your git email: " email
+    git config --global user.email "$email"
+fi
+{{- end }}

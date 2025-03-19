@@ -16,7 +16,7 @@
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
 {{- else if $interactive -}}
-{{-   $email := "92177433+LeonardHd@users.noreply.github.com" -}}
+{{-   $email = "92177433+LeonardHd@users.noreply.github.com" -}}
 {{-   $email = promptString "email" $email -}}
 {{- end -}}
 
@@ -40,4 +40,3 @@ data:
   name: {{ $name | quote }}
   email: {{ $email | quote }}
   gitUseGCM: {{ $gitUseGCM }}
-  remoteContainer: no

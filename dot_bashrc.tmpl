@@ -82,11 +82,15 @@ gscp() {
 ############################################
 
 {{ if eq .email "" }}
-# If email is not set, warn user to re apply chezmoi
-echo "WARNING: Git email is not set. Run 'chezmoi init --apply --data=false' to set it."
+# If email is not set check if git local config is set
+if ! git config --get user.email > /dev/null; then
+  echo "WARNING: Git email is not set. Run 'chezmoi init --apply --data=false' to set it."
+fi
 {{- end }}
 
 {{ if eq .name "" }}
-# If name is not set, warn user to re apply chezmoi
-echo "WARNING: Git name is not set. Run 'chezmoi init --apply --data=false' to set it."
+# If name is not set check if git local config is set
+if ! git config --get user.name > /dev/null; then
+  echo "WARNING: Git name is not set. Run 'chezmoi init --apply --data=false' to set it."
+fi
 {{- end }}

@@ -16,8 +16,7 @@
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
 {{- else if $interactive -}}
-{{-   $email = "92177433+LeonardHd@users.noreply.github.com" -}}
-{{-   $email = promptString "email" $email -}}
+{{-   $email = promptString "email" "92177433+LeonardHd@users.noreply.github.com" -}}
 {{- end -}}
 
 {{- /* Initializes the gitUseGCM variable with a default value */ -}}

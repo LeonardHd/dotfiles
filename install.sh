@@ -9,6 +9,40 @@
 # -u: exit on unset variables
 set -eu
 
+CONFIG_FILE="${HOME}/.dotfiles_config"
+
+# Default values
+name=""
+email=""
+
+# Parse arguments
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --name)
+      name="$2"
+      shift 2
+      ;;
+    --email)
+      email="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown argument: $1" >&2
+      exit 1
+      ;;
+  esac
+done
+
+# Read from config file if arguments were not provided
+if [ -f "$CONFIG_FILE" ]; then
+  name="${name:-$(grep '^name=' "$CONFIG_FILE" | cut -d'=' -f2)}"
+  email="${email:-$(grep '^email=' "$CONFIG_FILE" | cut -d'=' -f2)}"
+fi
+
+# Default fallback
+name="${name:-"Leonard Herold"}"
+email="${email:-"92177433+LeonardHd@users.noreply.github.com"}"
+
 
 if ! chezmoi="$(command -v chezmoi)"; then
   bin_dir="${HOME}/.local/bin"
@@ -36,7 +70,7 @@ if [ -d /workspaces/dotfiles ] && [ "${CODESPACES:-}" = "true" ]; then
   script_dir="/workspaces/dotfiles"
 fi
 
-set -- init --apply --data=false --source="${script_dir}"
+set -- init --apply --data "name=${name}" --data "email=${email}" --source="${script_dir}"
 
 echo "Running 'chezmoi $*'" >&2
 # exec: replace current process with chezmoi

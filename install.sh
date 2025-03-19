@@ -10,18 +10,6 @@
 set -eu
 
 
-# Read from config file if arguments were not provided
-if [ -f "$CONFIG_FILE" ]; then
-  name="${name:-$(grep '^name=' "$CONFIG_FILE" | cut -d'=' -f2)}"
-  email="${email:-$(grep '^email=' "$CONFIG_FILE" | cut -d'=' -f2)}"
-fi
-
-# Default fallback
-name="${name:-"Leonard Herold"}"
-email="${email:-"92177433+LeonardHd@users.noreply.github.com"}"
-
-
-
 if ! chezmoi="$(command -v chezmoi)"; then
   bin_dir="${HOME}/.local/bin"
   chezmoi="${bin_dir}/chezmoi"

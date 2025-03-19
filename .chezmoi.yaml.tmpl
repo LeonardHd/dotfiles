@@ -12,10 +12,11 @@
 {{- end -}}
 
 {{- /* Does the same for the email */ -}}
-{{- $email := "92177433+LeonardHd@users.noreply.github.com" -}}
+{{- $email := "" -}}
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
 {{- else if $interactive -}}
+{{-   $email := "92177433+LeonardHd@users.noreply.github.com" -}}
 {{-   $email = promptString "email" $email -}}
 {{- end -}}
 

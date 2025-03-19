@@ -9,7 +9,6 @@
 # -u: exit on unset variables
 set -eu
 
-
 if ! chezmoi="$(command -v chezmoi)"; then
   bin_dir="${HOME}/.local/bin"
   chezmoi="${bin_dir}/chezmoi"
@@ -33,12 +32,12 @@ if [ -d /workspaces/dotfiles ] && [ "${CODESPACES:-}" = "true" ]; then
   # use the /workespaces/dotfiles directory
   # assumes CODESPACES is set and RepositoryName==dotfiles
   script_dir="/workspaces/dotfiles"
-  set -- init --apply --data "remoteContainer=codespaces" --source="${script_dir}"
+  set -- init --apply --source="${script_dir}"
 else
   # If not in Codespaces, use the script's directory
   # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
   script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
-  set -- init --apply --data "remoteContainer=devcontainer" --source="${script_dir}"
+  set -- init --apply --source="${script_dir}"
 fi
 
 echo "Running 'chezmoi $*'" >&2

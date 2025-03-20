@@ -1,6 +1,6 @@
 # dotfiles
 
-This repository contains personal dotfiles and configuration files for various applications and tools and uses [chezmoi](https://www.chezmoi.io/).
+This repository contains personal dotfiles, configuration files, and helpful notes for various applications and tools and uses [chezmoi](https://www.chezmoi.io/).
 
 ## Configure for new environments
 

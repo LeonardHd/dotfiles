@@ -40,6 +40,11 @@ curl -LO "https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-
 sudo rm -rf /opt/nvim
 sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 
+# script base installs
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+
 # git-based installs
 
 # install oh-my-bash

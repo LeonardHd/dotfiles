@@ -37,6 +37,14 @@ Use the following user settings to enable dotfiles in the dev container:
 }
 ```
 
+## Override Chezmoi data (Codespace + Dev container)
+
+You can override the Chezmoi data used in this repository by creating a file
+named `.dotfile_chezmoi_data.json` in the root of the repository.
+
+An example file is provided in `.dotfile_chezmoi_data.json.example`.
+
+
 ### Additional information on Codespaces
 
 - The `install.sh` script is run in the codespace environment.  

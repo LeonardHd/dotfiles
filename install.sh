@@ -13,6 +13,7 @@ if ! chezmoi="$(command -v chezmoi)"; then
   bin_dir="${HOME}/.local/bin"
   chezmoi="${bin_dir}/chezmoi"
   echo "Installing chezmoi to '${chezmoi}'" >&2
+  mkdir -p "${bin_dir}"
   if command -v curl >/dev/null; then
     chezmoi_install_script="$(curl -fsSL https://chezmoi.io/get)"
   elif command -v wget >/dev/null; then
@@ -25,19 +26,27 @@ if ! chezmoi="$(command -v chezmoi)"; then
   unset chezmoi_install_script bin_dir
 fi
 
-# Check whether we run in a codespace
-# or build a devcontainer (via vscode)
+workspace_dir="$(pwd)"
+
+# Default to the script's directory.
+# POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
+script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
+
+# If running in Codespaces on the dotfiles repo, use /workspaces/dotfiles.
 if [ -d /workspaces/dotfiles ] && [ "${CODESPACES:-}" = "true" ]; then
-  # If in the dofiles repo and in Codespaces
-  # use the /workespaces/dotfiles directory
-  # assumes CODESPACES is set and RepositoryName==dotfiles
   script_dir="/workspaces/dotfiles"
-  set -- init --apply --source="${script_dir}"
-else
-  # If not in Codespaces, use the script's directory
-  # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
-  script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
-  set -- init --apply --source="${script_dir}"
+fi
+
+echo "script_dir=$script_dir"
+echo "workspace_dir=$workspace_dir"
+
+# Build the chezmoi arguments.
+set -- init --apply --source="${script_dir}"
+
+# Check if we have a .dotfile_chezmoi_data.json file present in the workspace.
+# If so, we use it as data source to override any existing data.
+if [ -f "${workspace_dir}/.dotfile_chezmoi_data.json" ]; then
+  set -- "$@" --override-data-file="${workspace_dir}/.dotfile_chezmoi_data.json"
 fi
 
 echo "Running 'chezmoi $*'" >&2

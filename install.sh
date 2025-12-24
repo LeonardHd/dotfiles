@@ -58,6 +58,7 @@ set -- init --apply --source="${script_dir}"
 # If so, we use it as data source to override any existing data.
 if [ -f "${workspace_dir}/.dotfile_chezmoi_data.json" ]; then
   set -- "$@" --override-data-file="${workspace_dir}/.dotfile_chezmoi_data.json"
+  echo "Using override data file: ${workspace_dir}/.dotfile_chezmoi_data.json"
 fi
 
 echo "Running 'chezmoi $*'" >&2

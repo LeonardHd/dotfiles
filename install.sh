@@ -26,7 +26,18 @@ if ! chezmoi="$(command -v chezmoi)"; then
   unset chezmoi_install_script bin_dir
 fi
 
-workspace_dir="$(pwd)"
+workspace_dir=""
+
+# Prefer the first directory under /workspaces (common in devcontainers/Codespaces).
+if [ -d /workspaces ]; then
+  for d in /workspaces/*; do
+    if [ -d "$d" ]; then
+      workspace_dir="$d"
+      break
+    fi
+  done
+fi
+
 
 # Default to the script's directory.
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188

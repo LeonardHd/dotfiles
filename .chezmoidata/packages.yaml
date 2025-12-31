@@ -4,6 +4,7 @@ packages:
     - 'vim'
     - 'git'
     - 'less'
+    - 'build-essential'
     webi:
     - gh
 

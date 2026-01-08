@@ -1,3 +1,9 @@
+
+# check if COPILOT is set, if so skip loading the bashrc
+if [ -n "$COPILOT" ]; then
+    return
+fi
+
 ############################################
 # Oh My bash
 ############################################

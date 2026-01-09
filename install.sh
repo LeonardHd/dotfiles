@@ -62,8 +62,7 @@ if [ -f "${workspace_dir}/.dotfile_chezmoi_data.json" ]; then
 fi
 
 echo "Running 'chezmoi $*'" >&2
-# exec: replace current process with chezmoi
-exec "$chezmoi" "$@"
+"$chezmoi" "$@"
 
 # Symlink the .gcplhd/ directory into the workspace from `${HOME}/.gcplhd/` if it exists.
 if [ -d "${HOME}/.gcplhd" ] && [ -n "$workspace_dir" ]; then

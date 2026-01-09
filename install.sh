@@ -61,12 +61,12 @@ if [ -f "${workspace_dir}/.dotfile_chezmoi_data.json" ]; then
   echo "Using override data file: ${workspace_dir}/.dotfile_chezmoi_data.json"
 fi
 
+echo "Running 'chezmoi $*'" >&2
+# exec: replace current process with chezmoi
+exec "$chezmoi" "$@"
+
 # Symlink the .gcplhd/ directory into the workspace from `${HOME}/.gcplhd/` if it exists.
 if [ -d "${HOME}/.gcplhd" ] && [ -n "$workspace_dir" ]; then
   ln -s "${HOME}/.gcplhd" "${workspace_dir}/.gcplhd"
   echo "Symlinked ${HOME}/.gcplhd to ${workspace_dir}/.gcplhd"
 fi
-
-echo "Running 'chezmoi $*'" >&2
-# exec: replace current process with chezmoi
-exec "$chezmoi" "$@"
